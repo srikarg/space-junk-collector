@@ -18,7 +18,17 @@ const config: Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [Boot, Preloader, MainMenu, MainGame, GameOver],
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: {
+        y: 200,
+      },
+      debug: false,
+    },
+  },
+  // scene: [Boot, Preloader, MainMenu, MainGame, GameOver],
+  scene: [MainGame, GameOver],
 }
 
 export default new Game(config)
