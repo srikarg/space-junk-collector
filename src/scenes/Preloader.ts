@@ -68,6 +68,9 @@ export class Preloader extends Scene {
       frameWidth: 8,
       frameHeight: 8,
     })
+
+    // Bullet sprites
+    this.load.image('bullet-heavy', 'bullet-heavy.png')
   }
 
   create() {

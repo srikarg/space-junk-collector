@@ -1,6 +1,7 @@
 export class Player extends Phaser.Physics.Arcade.Sprite {
   #rocketThrustDistanceFromShip = 20
   #rocketThrust: Phaser.GameObjects.Sprite
+  energy = 10
 
   constructor(scene: Phaser.Scene) {
     super(

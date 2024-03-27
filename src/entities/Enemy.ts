@@ -45,4 +45,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.y - this.#rocketThrustDistanceFromShip,
     )
   }
+
+  die() {
+    this.#rocketThrust.destroy()
+    this.destroy()
+  }
 }
