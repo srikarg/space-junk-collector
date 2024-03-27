@@ -50,6 +50,24 @@ export class Preloader extends Scene {
       frameHeight: 5,
       spacing: 4,
     })
+
+    // Enemy ships sprites
+    this.load.spritesheet('ship-green', 'ship-green.png', {
+      frameWidth: 8,
+      frameHeight: 8,
+    })
+    this.load.spritesheet('ship-orange', 'ship-orange.png', {
+      frameWidth: 8,
+      frameHeight: 8,
+    })
+    this.load.spritesheet('ship-purple', 'ship-purple.png', {
+      frameWidth: 8,
+      frameHeight: 8,
+    })
+    this.load.spritesheet('ship-red', 'ship-red.png', {
+      frameWidth: 8,
+      frameHeight: 8,
+    })
   }
 
   create() {

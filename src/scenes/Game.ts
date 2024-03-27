@@ -1,5 +1,6 @@
 import { Scene } from 'phaser'
 import { Player } from '../entities/Player'
+import { Enemy } from '../entities/Enemy'
 
 export class Game extends Scene {
   #background: Phaser.GameObjects.TileSprite
@@ -41,19 +42,12 @@ export class Game extends Scene {
 
     this.#player = new Player(this)
 
-    this.#enemies = this.physics.add.group()
+    this.#enemies = this.add.group()
     this.#food = this.physics.add.group()
 
-    for (let i = 0; i < 20; i++) {
-      const enemy = this.add.circle(
-        Phaser.Math.Between(0, GAME_WIDTH),
-        0,
-        5,
-        Phaser.Display.Color.HexStringToColor('#da2442').color,
-        1,
-      )
+    for (let i = 0; i < 4; i++) {
+      const enemy = new Enemy(this)
       this.#enemies.add(enemy)
-      enemy.body.setCollideWorldBounds(true, 1, 1, true)
 
       const food = this.add.circle(
         Phaser.Math.Between(0, GAME_WIDTH),
@@ -75,7 +69,6 @@ export class Game extends Scene {
         fontSize: '20px',
       },
     )
-
 
     this.physics.add.overlap(this.#player, this.#food, (player, food) => {
       if (food.visible) {
@@ -104,5 +97,6 @@ export class Game extends Scene {
   update() {
     this.#background.tilePositionY -= 0.4
     this.#player.update(this)
+    this.#enemies.getChildren().forEach(enemy => enemy.update(this))
   }
 }
