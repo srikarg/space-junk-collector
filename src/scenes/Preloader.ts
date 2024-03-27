@@ -39,9 +39,16 @@ export class Preloader extends Scene {
   preload() {
     //  Load the assets for the game - Replace with your own assets
     this.load.setPath('assets')
+
+    // Player ship and rocket thrust sprites
     this.load.spritesheet('ship-white', 'ship-white.png', {
       frameWidth: 8,
       frameHeight: 8,
+    })
+    this.load.spritesheet('rocket-thrust', 'rocket-thrust.png', {
+      frameWidth: 4,
+      frameHeight: 5,
+      spacing: 4,
     })
   }
 

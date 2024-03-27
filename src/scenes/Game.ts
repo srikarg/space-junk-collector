@@ -24,14 +24,20 @@ export class Game extends Scene {
     this.#background = this.add.tileSprite(
       GAME_WIDTH / 2,
       GAME_HEIGHT / 2,
-      0,
-      0,
+      GAME_WIDTH,
+      GAME_HEIGHT,
       'backgrounds',
       0,
     )
 
     this.input.setDefaultCursor('none')
-    this.physics.world.setBoundsCollision()
+
+    this.anims.create({
+      key: 'rocket-thrust',
+      frames: this.anims.generateFrameNames('rocket-thrust'),
+      frameRate: 20,
+      repeat: -1,
+    })
 
     this.#player = new Player(this)
 

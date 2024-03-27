@@ -15,16 +15,16 @@ export class MainMenu extends Scene {
     this.#background = this.add.tileSprite(
       GAME_WIDTH / 2,
       GAME_HEIGHT / 2,
-      0,
-      0,
+      GAME_WIDTH,
+      GAME_HEIGHT,
       'backgrounds',
       0,
     )
 
     this.#title = this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'Main Menu', {
-        color: '#ffffff',
+      .text(GAME_WIDTH / 2, 40, 'Space Junk Collector', {
         align: 'center',
+        fontSize: '30px',
       })
       .setOrigin(0.5)
 

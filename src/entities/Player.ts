@@ -1,4 +1,7 @@
 export class Player extends Phaser.Physics.Arcade.Sprite {
+  #rocketThrustDistanceFromShip = 20
+  #rocketThrust: Phaser.GameObjects.Sprite
+
   constructor(scene: Phaser.Scene) {
     super(
       scene,
@@ -10,12 +13,24 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this)
     scene.physics.add.existing(this)
 
-    this.setScale(2)
+    this.setScale(3)
     this.setCollideWorldBounds(true)
 
+    this.#rocketThrust = scene.add
+      .sprite(
+        this.x,
+        this.y + this.#rocketThrustDistanceFromShip,
+        'rocket-thrust',
+      )
+      .setScale(4)
+      .play('rocket-thrust')
+
     scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      this.setX(pointer.x)
-      this.setY(pointer.y)
+      this.setPosition(pointer.x, pointer.y)
+      this.#rocketThrust.setPosition(
+        this.x,
+        this.y + this.#rocketThrustDistanceFromShip,
+      )
     })
   }
 
