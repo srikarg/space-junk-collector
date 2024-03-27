@@ -1,10 +1,11 @@
 import { Scene } from 'phaser'
+import { Player } from '../entities/Player'
 
 export class Game extends Scene {
   #background: Phaser.GameObjects.TileSprite
   #food: Phaser.Physics.Arcade.Group
   #enemies: Phaser.Physics.Arcade.Group
-  #player: Phaser.GameObjects.Arc
+  #player: Player
   #score: number
   #scoreText: Phaser.GameObjects.Text
 
@@ -32,15 +33,7 @@ export class Game extends Scene {
     this.input.setDefaultCursor('none')
     this.physics.world.setBoundsCollision()
 
-    this.#player = this.add.circle(
-      GAME_WIDTH / 2,
-      GAME_HEIGHT / 2,
-      5,
-      Phaser.Display.Color.HexStringToColor('#FF00FF').color,
-    )
-    this.physics.add.existing(this.#player, false)
-    this.#player.body.setAllowGravity(false)
-    this.#player.body.setCollideWorldBounds(true)
+    this.#player = new Player(this)
 
     this.#enemies = this.physics.add.group()
     this.#food = this.physics.add.group()
@@ -77,10 +70,6 @@ export class Game extends Scene {
       },
     )
 
-    this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      this.#player.x = pointer.x
-      this.#player.y = pointer.y
-    })
 
     this.physics.add.overlap(this.#player, this.#food, (player, food) => {
       if (food.visible) {
@@ -108,5 +97,6 @@ export class Game extends Scene {
 
   update() {
     this.#background.tilePositionY -= 0.4
+    this.#player.update(this)
   }
 }
