@@ -38,6 +38,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.y > scene.game.config.height) {
       this.x = Phaser.Math.Between(0, scene.game.config.width)
       this.y = 0
+      this.setVisible(true)
+      this.#rocketThrust.setVisible(true)
     }
 
     this.#rocketThrust.setPosition(
@@ -47,7 +49,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   die() {
-    this.#rocketThrust.destroy()
-    this.destroy()
+    this.#rocketThrust.setVisible(false)
+    this.setVisible(false)
   }
 }

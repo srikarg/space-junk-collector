@@ -53,6 +53,16 @@ export class Game extends Scene {
     for (let i = 0; i < 4; i++) {
       const enemy = new Enemy(this)
       this.#enemies.add(enemy)
+
+      const food = this.add.circle(
+        Phaser.Math.Between(0, GAME_WIDTH),
+        0,
+        Phaser.Math.Between(10, 15),
+        Phaser.Display.Color.HexStringToColor('#047857').color,
+        1,
+      )
+      this.#food.add(food)
+      food.body.setCollideWorldBounds(true, 1, 1, true)
     }
 
     this.time.addEvent({
@@ -75,7 +85,7 @@ export class Game extends Scene {
       .setOrigin(0.5)
 
     this.physics.add.overlap(this.#player, this.#enemies, (_player, enemy) => {
-      this.#player.energy -= 2
+      if (enemy.visible) this.#player.energy -= 2
       enemy.die()
       this.#scoreText.setText(
         `Score: ${this.#score}\nEnergy: ${this.#player.energy}`,
@@ -88,6 +98,16 @@ export class Game extends Scene {
       this.#scoreText.setText(
         `Score: ${this.#score}\nEnergy: ${this.#player.energy}`,
       )
+    })
+
+    this.physics.add.overlap(this.#player, this.#food, (player, food) => {
+      if (food.visible) {
+        this.#score += 1
+        this.#scoreText.setText(
+          `Score: ${this.#score}\nEnergy: ${this.#player.energy}`,
+        )
+      }
+      food.setVisible(false)
     })
   }
 
@@ -103,7 +123,7 @@ export class Game extends Scene {
   // Function to handle enemy bullet firing
   enemyFireBullet() {
     this.#enemies.getChildren().forEach(enemy => {
-      if (enemy.active) {
+      if (enemy.active && enemy.visible) {
         this.#bullets.create(enemy.x, enemy.y + 20).setScale(4)
       }
     })

@@ -13,12 +13,14 @@ export class GameOver extends Scene {
   }
 
   create() {
+    const GAME_WIDTH = this.game.config.width
+    const GAME_HEIGHT = this.game.config.height
+
     this.#gameOverText = this.add.text(
-      512,
-      384,
-      `Game Over! Your final score was ${this.#finalScore}`,
+      GAME_WIDTH / 2,
+      GAME_HEIGHT / 2,
+      `Game Over!\nYour final score was ${this.#finalScore}.`,
       {
-        color: '#ffffff',
         align: 'center',
       },
     )
