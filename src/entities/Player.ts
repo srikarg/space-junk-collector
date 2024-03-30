@@ -37,18 +37,14 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.#bullets,
       (enemy, playerBullet) => {
         if (playerBullet.active && enemy.visible) {
-          gameScene.score += 1
-          const explosion = gameScene.physics.add
-            .sprite(enemy.x, enemy.y, 'explosion', 0)
-            .setScale(5)
-
-          explosion.play('explosion').on('animationcomplete', () => {
-            explosion.destroy()
-          })
+          gameScene.spawnExplosion(enemy.x, enemy.y, 8)
 
           enemy.die()
+
           playerBullet.setActive(false)
           playerBullet.setVisible(false)
+
+          gameScene.score += 1
           gameScene.updateScore()
         }
       },

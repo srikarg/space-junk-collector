@@ -74,8 +74,12 @@ export class Game extends Scene {
       this.enemies,
       (player: Player, enemy: Enemy) => {
         if (enemy.visible) {
+          this.spawnExplosion(player.x, player.y)
+
           player.energy -= 2
+
           enemy.die()
+
           this.updateScore()
         }
       },
@@ -87,7 +91,9 @@ export class Game extends Scene {
       (player: Player, energy: Energy) => {
         if (energy.visible) {
           player.energy += 1
+
           energy.collect()
+
           this.updateScore()
         }
       },
@@ -126,5 +132,15 @@ export class Game extends Scene {
     this.#scoreText.setText(
       `Score: ${this.score}\nEnergy: ${this.player.energy}`,
     )
+  }
+
+  spawnExplosion(x: number, y: number, scale = 5) {
+    const explosion = this.physics.add
+      .sprite(x, y, 'explosion', 0)
+      .setScale(scale)
+
+    explosion.play('explosion').on('animationcomplete', () => {
+      explosion.destroy()
+    })
   }
 }
