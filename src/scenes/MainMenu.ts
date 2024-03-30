@@ -2,7 +2,6 @@ import { Scene, GameObjects } from 'phaser'
 
 export class MainMenu extends Scene {
   #background: GameObjects.TileSprite
-  #title: GameObjects.Text
 
   constructor() {
     super('MainMenu')
@@ -21,7 +20,7 @@ export class MainMenu extends Scene {
       0,
     )
 
-    this.#title = this.add
+    this.add
       .text(GAME_WIDTH / 2, 40, 'Space Junk Collector', {
         align: 'center',
         fontSize: '30px',

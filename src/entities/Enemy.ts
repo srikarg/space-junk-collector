@@ -1,11 +1,15 @@
+import { Bullets } from './Bullets'
+
 export class Enemy extends Phaser.Physics.Arcade.Sprite {
   #rocketThrustDistanceFromShip = 20
   #rocketThrust: Phaser.GameObjects.Sprite
+  #bullets: Bullets
+  #velocityY = 0
 
-  constructor(scene: Phaser.Scene) {
+  constructor(gameScene: Phaser.Scene) {
     super(
-      scene,
-      Phaser.Math.Between(0, scene.game.config.width),
+      gameScene,
+      Phaser.Math.Between(0, gameScene.game.config.width),
       0,
       Phaser.Math.RND.pick([
         'ship-green',
@@ -16,12 +20,29 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       1,
     )
 
-    scene.add.existing(this)
-    scene.physics.add.existing(this)
+    gameScene.add.existing(this)
+    gameScene.physics.add.existing(this)
 
     this.setScale(4)
 
-    this.#rocketThrust = scene.add
+    this.#bullets = new Bullets(gameScene, 5, 'bullet-heavy')
+
+    this.resetVelocityY()
+
+    gameScene.physics.add.overlap(
+      gameScene.player,
+      this.#bullets,
+      (player, enemyBullet) => {
+        if (enemyBullet.visible) {
+          player.energy -= 1
+          enemyBullet.setActive(false)
+          enemyBullet.setVisible(false)
+          gameScene.updateScore()
+        }
+      },
+    )
+
+    this.#rocketThrust = gameScene.add
       .sprite(
         this.x,
         this.y - this.#rocketThrustDistanceFromShip,
@@ -33,9 +54,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(scene: Phaser.Scene) {
-    this.y += 2
-
     if (this.y > scene.game.config.height) {
+      this.resetVelocityY()
       this.x = Phaser.Math.Between(0, scene.game.config.width)
       this.y = 0
       this.setVisible(true)
@@ -46,6 +66,16 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.x,
       this.y - this.#rocketThrustDistanceFromShip,
     )
+  }
+
+  resetVelocityY() {
+    this.#velocityY = Phaser.Math.Between(200, 600)
+    this.setVelocityY(this.#velocityY)
+    this.#bullets.setVelocityY(this.#velocityY * 1.2)
+  }
+
+  fire() {
+    this.#bullets.fire(this.x, this.y + 20)
   }
 
   die() {

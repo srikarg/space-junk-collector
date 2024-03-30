@@ -1,22 +1,23 @@
 import { Scene } from 'phaser'
 import { Enemy } from '../entities/Enemy'
 import { Player } from '../entities/Player'
+import { Energy } from '../entities/Energy'
 
 export class Game extends Scene {
   #background: Phaser.GameObjects.TileSprite
-  #food: Phaser.Physics.Arcade.Group
-  #enemies: Phaser.Physics.Arcade.Group
-  #bullets: Phaser.Physics.Arcade.Group
-  #player: Player
-  #score: number
+  #energies: Phaser.Physics.Arcade.Group
+  score: number
   #scoreText: Phaser.GameObjects.Text
+
+  enemies: Phaser.Physics.Arcade.Group
+  player: Player
 
   constructor() {
     super('Game')
   }
 
   init() {
-    this.#score = 0
+    this.score = 0
   }
 
   create() {
@@ -34,98 +35,96 @@ export class Game extends Scene {
 
     this.input.setDefaultCursor('none')
 
-    this.anims.create({
-      key: 'rocket-thrust',
-      frames: this.anims.generateFrameNames('rocket-thrust'),
-      frameRate: 20,
-      repeat: -1,
-    })
+    this.enemies = this.add.group()
+    this.player = new Player(this)
 
-    this.#player = new Player(this)
+    this.#energies = this.add.group()
 
-    this.#enemies = this.add.group()
-    this.#bullets = this.physics.add.group({
-      defaultKey: 'bullet-heavy',
-      velocityY: 500,
-    })
-    this.#food = this.physics.add.group()
-
-    for (let i = 0; i < 4; i++) {
-      const enemy = new Enemy(this)
-      this.#enemies.add(enemy)
-
-      const food = this.add.circle(
-        Phaser.Math.Between(0, GAME_WIDTH),
-        0,
-        Phaser.Math.Between(10, 15),
-        Phaser.Display.Color.HexStringToColor('#047857').color,
-        1,
-      )
-      this.#food.add(food)
-      food.body.setCollideWorldBounds(true, 1, 1, true)
+    for (let i = 0; i < 8; i++) {
+      this.enemies.add(new Enemy(this))
     }
 
+    this.input.on('pointerdown', this.playerFireBullet, this)
+
     this.time.addEvent({
-      delay: 1000, // Adjust the delay as needed
+      delay: 1000,
       loop: true,
       callback: this.enemyFireBullet,
       callbackScope: this,
     })
 
+    this.time.addEvent({
+      delay: 5000,
+      loop: true,
+      callback: this.spawnEnergy,
+      callbackScope: this,
+    })
+
     this.#scoreText = this.add
-      .text(
-        GAME_WIDTH / 2,
-        40,
-        `Score: ${this.#score}\nEnergy: ${this.#player.energy}`,
-        {
-          fontSize: '20px',
-          align: 'center',
-        },
-      )
+      .text(GAME_WIDTH / 2, 40, '', {
+        fontSize: '20px',
+        align: 'center',
+      })
       .setOrigin(0.5)
 
-    this.physics.add.overlap(this.#player, this.#enemies, (_player, enemy) => {
-      if (enemy.visible) this.#player.energy -= 2
-      enemy.die()
-      this.#scoreText.setText(
-        `Score: ${this.#score}\nEnergy: ${this.#player.energy}`,
-      )
-    })
+    this.updateScore()
 
-    this.physics.add.overlap(this.#player, this.#bullets, (_player, bullet) => {
-      this.#player.energy -= 1
-      bullet.destroy()
-      this.#scoreText.setText(
-        `Score: ${this.#score}\nEnergy: ${this.#player.energy}`,
-      )
-    })
+    this.physics.add.overlap(
+      this.player,
+      this.enemies,
+      (player: Player, enemy: Enemy) => {
+        if (enemy.visible) {
+          player.energy -= 2
+          enemy.die()
+          this.updateScore()
+        }
+      },
+    )
 
-    this.physics.add.overlap(this.#player, this.#food, (player, food) => {
-      if (food.visible) {
-        this.#score += 1
-        this.#scoreText.setText(
-          `Score: ${this.#score}\nEnergy: ${this.#player.energy}`,
-        )
-      }
-      food.setVisible(false)
-    })
+    this.physics.add.overlap(
+      this.player,
+      this.#energies,
+      (player: Player, energy: Energy) => {
+        if (energy.visible) {
+          player.energy += 1
+          energy.collect()
+          this.updateScore()
+        }
+      },
+    )
   }
 
   update() {
     this.#background.tilePositionY -= 0.4
-    this.#player.update(this)
-    this.#enemies.getChildren().forEach(enemy => enemy.update(this))
-    if (this.#player.energy <= 0) {
-      this.scene.start('GameOver', { score: this.#score })
+
+    this.player.update(this)
+    this.enemies.getChildren().forEach(enemy => enemy.update(this))
+    this.#energies.getChildren().forEach(energy => energy.update(this))
+
+    if (this.player.energy <= 0) {
+      this.scene.start('GameOver', { score: this.score })
     }
   }
 
-  // Function to handle enemy bullet firing
+  spawnEnergy() {
+    this.#energies.add(new Energy(this))
+  }
+
+  playerFireBullet() {
+    this.player.fire()
+  }
+
   enemyFireBullet() {
-    this.#enemies.getChildren().forEach(enemy => {
+    this.enemies.getChildren().forEach(enemy => {
       if (enemy.active && enemy.visible) {
-        this.#bullets.create(enemy.x, enemy.y + 20).setScale(4)
+        enemy.fire()
       }
     })
+  }
+
+  updateScore() {
+    this.#scoreText.setText(
+      `Score: ${this.score}\nEnergy: ${this.player.energy}`,
+    )
   }
 }

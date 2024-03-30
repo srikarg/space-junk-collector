@@ -71,11 +71,35 @@ export class Preloader extends Scene {
 
     // Bullet sprites
     this.load.image('bullet-heavy', 'bullet-heavy.png')
+    this.load.image('bullet-medium', 'bullet-medium.png')
+
+    // Energy sprites
+    this.load.image('blue-energy', 'blue-energy.png')
+    this.load.image('pink-energy', 'pink-energy.png')
+
+    // Explosion sprite
+    this.load.spritesheet('explosion', 'explosion.png', {
+      frameWidth: 8,
+      frameHeight: 8,
+    })
   }
 
   create() {
     //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
     //  For example, you can define global animations here, so we can use them in other scenes.
+    this.anims.create({
+      key: 'rocket-thrust',
+      frames: this.anims.generateFrameNames('rocket-thrust'),
+      frameRate: 20,
+      repeat: -1,
+    })
+
+    this.anims.create({
+      key: 'explosion',
+      frames: this.anims.generateFrameNames('explosion'),
+      frameRate: 20,
+      repeat: 1,
+    })
 
     //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
     this.scene.start('MainMenu')
