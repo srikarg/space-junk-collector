@@ -21,10 +21,30 @@ export class MainMenu extends Scene {
     )
 
     this.add
-      .text(GAME_WIDTH / 2, 40, 'Space Junk Collector', {
+      .text(GAME_WIDTH / 2, 40, 'SPACE JUNK COLLECTOR', {
         align: 'center',
         fontSize: '30px',
+        fontStyle: 'bold',
       })
+      .setOrigin(0.5)
+
+    this.add
+      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 50, 'CLICK TO START', {
+        align: 'center',
+        fontSize: '24px',
+      })
+      .setOrigin(0.5)
+
+    this.add
+      .text(
+        GAME_WIDTH / 2,
+        GAME_HEIGHT / 2 + 50,
+        '1. Collect blue and pink hearts to gain energy\n\n2. Crashing into enemies and bullets loses energy\n\n3. Shoot enemies to add to your score',
+        {
+          align: 'center',
+          fontSize: '16px',
+        },
+      )
       .setOrigin(0.5)
 
     this.input.once('pointerdown', () => {

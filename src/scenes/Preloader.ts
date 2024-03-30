@@ -11,7 +11,6 @@ export class Preloader extends Scene {
     const GAME_WIDTH = this.game.config.width
     const GAME_HEIGHT = this.game.config.height
 
-    //  We loaded this image in our Boot Scene, so we can display it here
     this.#background = this.add.tileSprite(
       GAME_WIDTH / 2,
       GAME_HEIGHT / 2,
@@ -37,7 +36,7 @@ export class Preloader extends Scene {
   }
 
   preload() {
-    //  Load the assets for the game - Replace with your own assets
+    //  Load the assets for the game
     this.load.setPath('assets')
 
     // Player ship and rocket thrust sprites
@@ -85,8 +84,6 @@ export class Preloader extends Scene {
   }
 
   create() {
-    //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
-    //  For example, you can define global animations here, so we can use them in other scenes.
     this.anims.create({
       key: 'rocket-thrust',
       frames: this.anims.generateFrameNames('rocket-thrust'),
@@ -101,7 +98,6 @@ export class Preloader extends Scene {
       repeat: 1,
     })
 
-    //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
     this.scene.start('MainMenu')
   }
 
