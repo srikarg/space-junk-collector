@@ -99,3 +99,7 @@ in specific npm tasks inside of `package.json`. Please see the
 - [ ] Add SFX
 - [ ] Add music
 - [ ] Add more levels
+
+## Credits
+
+1. [Space Shooter Asset Pack created by Gustavo Vituri](https://gvituri.itch.io/space-shooter)
