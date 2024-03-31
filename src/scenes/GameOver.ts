@@ -1,7 +1,6 @@
 import { Scene } from 'phaser'
 
 export class GameOver extends Scene {
-  #gameOverText: Phaser.GameObjects.Text
   #finalScore: number
 
   constructor() {
@@ -16,15 +15,25 @@ export class GameOver extends Scene {
     const GAME_WIDTH = this.game.config.width
     const GAME_HEIGHT = this.game.config.height
 
-    this.#gameOverText = this.add.text(
-      GAME_WIDTH / 2,
-      GAME_HEIGHT / 2,
-      `Game Over!\nYour final score was ${this.#finalScore}.`,
-      {
+    this.add
+      .text(GAME_WIDTH / 2, 40, 'GAME OVER!', {
         align: 'center',
-      },
-    )
-    this.#gameOverText.setOrigin(0.5)
+        fontSize: '30px',
+        fontStyle: 'bold',
+      })
+      .setOrigin(0.5)
+
+    this.add
+      .text(
+        GAME_WIDTH / 2,
+        GAME_HEIGHT / 2,
+        `YOUR FINAL SCORE WAS ${this.#finalScore}.\n\nCLICK ANYWHERE TO START A NEW GAME!`,
+        {
+          align: 'center',
+          fontSize: '24px',
+        },
+      )
+      .setOrigin(0.5)
 
     this.input.once('pointerdown', () => {
       this.scene.start('MainMenu')

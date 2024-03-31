@@ -20,6 +20,11 @@ export class MainMenu extends Scene {
       0,
     )
 
+    // Play music
+    if (!this.sound.get('bg')) {
+      this.sound.add('bg', { loop: true }).play()
+    }
+
     this.add
       .text(GAME_WIDTH / 2, 40, 'SPACE JUNK COLLECTOR', {
         align: 'center',

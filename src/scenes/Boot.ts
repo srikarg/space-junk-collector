@@ -6,7 +6,7 @@ export class Boot extends Scene {
   }
 
   preload() {
-    this.load.spritesheet('backgrounds', 'assets/bgs.png', {
+    this.load.spritesheet('backgrounds', 'assets/sprites/bgs.png', {
       frameWidth: 128,
       frameHeight: 256,
       spacing: 1,

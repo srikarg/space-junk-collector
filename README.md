@@ -97,9 +97,12 @@ in specific npm tasks inside of `package.json`. Please see the
 ## Future Improvements
 
 - [ ] Add SFX
-- [ ] Add music
+- [x] Add music
+- [ ] Add asteroids/junk to collect
+- [ ] Add ship upgrades by collecting junk
 - [ ] Add more levels
 
 ## Credits
 
 1. [Space Shooter Asset Pack created by Gustavo Vituri](https://gvituri.itch.io/space-shooter)
+2. [Music Loop Bundle created by Abstraction](https://tallbeard.itch.io/music-loop-bundle)
