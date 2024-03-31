@@ -1,4 +1,5 @@
 import { Scene, GameObjects } from 'phaser'
+import { GameControls } from '../entities/GameControls'
 
 export class MainMenu extends Scene {
   #background: GameObjects.TileSprite
@@ -51,6 +52,15 @@ export class MainMenu extends Scene {
         },
       )
       .setOrigin(0.5)
+
+    this.add
+      .text(GAME_WIDTH / 2, GAME_HEIGHT - 50, 'Press "m" to toggle music.', {
+        align: 'center',
+        fontSize: '16px',
+      })
+      .setOrigin(0.5)
+
+    this.add.existing(new GameControls(this))
 
     this.input.once('pointerdown', () => {
       this.scene.start('Game')

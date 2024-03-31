@@ -96,6 +96,12 @@ export class Preloader extends Scene {
       frameHeight: 8,
     })
 
+    // UI sprites
+    this.load.spritesheet('audio-buttons', 'sprites/audio-buttons.png', {
+      frameWidth: 12,
+      frameHeight: 13,
+    })
+
     // Music
     this.load.audio('bg', 'music/bg.ogg')
   }

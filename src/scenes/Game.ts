@@ -2,6 +2,7 @@ import { Scene } from 'phaser'
 import { Enemy } from '../entities/Enemy'
 import { Player } from '../entities/Player'
 import { Energy } from '../entities/Energy'
+import { GameControls } from '../entities/GameControls'
 
 export class Game extends Scene {
   #background: Phaser.GameObjects.TileSprite
@@ -32,6 +33,8 @@ export class Game extends Scene {
       'backgrounds',
       0,
     )
+
+    this.add.existing(new GameControls(this))
 
     this.input.setDefaultCursor('none')
 
