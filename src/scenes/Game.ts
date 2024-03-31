@@ -66,6 +66,7 @@ export class Game extends Scene {
     this.#scoreText = this.add
       .text(GAME_WIDTH / 2, 40, '', {
         fontSize: '20px',
+        fontFamily: 'Silkscreen',
         align: 'center',
       })
       .setOrigin(0.5)

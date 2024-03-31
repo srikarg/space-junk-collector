@@ -27,28 +27,35 @@ export class MainMenu extends Scene {
     }
 
     this.add
-      .text(GAME_WIDTH / 2, 40, 'SPACE JUNK COLLECTOR', {
+      .text(GAME_WIDTH / 2, GAME_HEIGHT / 4, 'SPACE JUNK COLLECTOR', {
         align: 'center',
-        fontSize: '30px',
+        fontSize: '34px',
+        fontFamily: 'Silkscreen',
         fontStyle: 'bold',
       })
       .setOrigin(0.5)
 
     this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 50, 'CLICK TO START', {
+      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 100, 'CLICK TO START', {
         align: 'center',
         fontSize: '24px',
+        fontFamily: 'Silkscreen',
       })
       .setOrigin(0.5)
 
     this.add
       .text(
         GAME_WIDTH / 2,
-        GAME_HEIGHT / 2 + 50,
+        GAME_HEIGHT / 2 + 100,
         '1. Collect blue and pink hearts to gain energy\n\n2. Crashing into enemies and bullets loses energy\n\n3. Shoot enemies to add to your score',
         {
           align: 'center',
-          fontSize: '16px',
+          fontSize: '18px',
+          fontFamily: 'Silkscreen',
+          wordWrap: {
+            width: this.game.config.width,
+            useAdvancedWrap: true,
+          },
         },
       )
       .setOrigin(0.5)
@@ -57,6 +64,7 @@ export class MainMenu extends Scene {
       .text(GAME_WIDTH / 2, GAME_HEIGHT - 50, 'Press "m" to toggle music.', {
         align: 'center',
         fontSize: '16px',
+        fontFamily: 'Silkscreen',
       })
       .setOrigin(0.5)
 

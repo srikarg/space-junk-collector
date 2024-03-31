@@ -1,4 +1,5 @@
 import { Scene } from 'phaser'
+import WebFontFile from '../utils/WebFontFile'
 
 export class Preloader extends Scene {
   #background: Phaser.GameObjects.TileSprite
@@ -52,6 +53,9 @@ export class Preloader extends Scene {
   preload() {
     //  Load the assets for the game
     this.load.setPath('assets')
+
+    // Load fonts
+    this.load.addFile(new WebFontFile(this.load, ['Silkscreen']))
 
     // Player ship and rocket thrust sprites
     this.load.spritesheet('ship-white', 'sprites/ship-white.png', {

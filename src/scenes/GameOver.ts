@@ -29,9 +29,10 @@ export class GameOver extends Scene {
     this.add.existing(new GameControls(this))
 
     this.add
-      .text(GAME_WIDTH / 2, 40, 'GAME OVER!', {
+      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 50, 'GAME OVER!', {
         align: 'center',
-        fontSize: '30px',
+        fontSize: '34px',
+        fontFamily: 'Silkscreen',
         fontStyle: 'bold',
       })
       .setOrigin(0.5)
@@ -39,11 +40,27 @@ export class GameOver extends Scene {
     this.add
       .text(
         GAME_WIDTH / 2,
-        GAME_HEIGHT / 2,
-        `YOUR FINAL SCORE WAS ${this.#finalScore}.\n\nCLICK ANYWHERE TO START A NEW GAME!`,
+        GAME_HEIGHT / 2 + 50,
+        `YOUR FINAL SCORE WAS ${this.#finalScore}.`,
         {
           align: 'center',
-          fontSize: '24px',
+          fontSize: '20px',
+          fontFamily: 'Silkscreen',
+          fontStyle: 'bold',
+        },
+      )
+      .setOrigin(0.5)
+
+    this.add
+      .text(
+        GAME_WIDTH / 2,
+        GAME_HEIGHT / 2 + 200,
+        'CLICK ANYWHERE TO START A NEW GAME!',
+        {
+          align: 'center',
+          fontSize: '20px',
+          fontFamily: 'Silkscreen',
+          fontStyle: 'bold',
         },
       )
       .setOrigin(0.5)
