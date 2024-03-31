@@ -31,6 +31,9 @@ export class Bullets extends Phaser.Physics.Arcade.Group {
 
     if (bullet) {
       bullet.fire(x, y, this.#bulletVelocityY)
+      return true
     }
+
+    return false
   }
 }

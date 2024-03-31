@@ -35,9 +35,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       (player, enemyBullet) => {
         if (enemyBullet.visible) {
           player.energy -= 1
+          gameScene.updateScore()
+          gameScene.spawnExplosion(player.x, player.y)
           enemyBullet.setActive(false)
           enemyBullet.setVisible(false)
-          gameScene.updateScore()
         }
       },
     )
@@ -75,7 +76,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   fire() {
-    this.#bullets.fire(this.x, this.y + 20)
+    return this.#bullets.fire(this.x, this.y + 20)
   }
 
   die() {

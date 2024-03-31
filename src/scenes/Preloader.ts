@@ -108,6 +108,11 @@ export class Preloader extends Scene {
 
     // Music
     this.load.audio('bg', 'music/bg.ogg')
+
+    // SFX
+    this.load.audio('contact-hit', 'sfx/contact-hit.wav')
+    this.load.audio('player-bullet', 'sfx/player-bullet.wav')
+    this.load.audio('pickup-energy', 'sfx/pickup-energy.wav')
   }
 
   create() {

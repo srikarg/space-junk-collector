@@ -98,6 +98,7 @@ export class Game extends Scene {
 
           energy.collect()
 
+          this.sound.add('pickup-energy').play()
           this.updateScore()
         }
       },
@@ -121,7 +122,9 @@ export class Game extends Scene {
   }
 
   playerFireBullet() {
-    this.player.fire()
+    if (this.player.fire()) {
+      this.sound.add('player-bullet').play()
+    }
   }
 
   enemyFireBullet() {
@@ -145,6 +148,10 @@ export class Game extends Scene {
 
     explosion.play('explosion').on('animationcomplete', () => {
       explosion.destroy()
+    })
+
+    this.sound.add('contact-hit').play({
+      detune: Phaser.Math.Between(-500, 200),
     })
   }
 }

@@ -67,6 +67,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   fire() {
-    this.#bullets.fire(this.x, this.y)
+    return this.#bullets.fire(this.x, this.y)
   }
 }

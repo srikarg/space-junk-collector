@@ -96,7 +96,7 @@ in specific npm tasks inside of `package.json`. Please see the
 
 ## Future Improvements
 
-- [ ] Add SFX
+- [x] Add SFX
 - [x] Add music
 - [ ] Add asteroids/junk to collect
 - [ ] Add ship upgrades by collecting junk
@@ -106,3 +106,4 @@ in specific npm tasks inside of `package.json`. Please see the
 
 1. [Space Shooter Asset Pack created by Gustavo Vituri](https://gvituri.itch.io/space-shooter)
 2. [Music Loop Bundle created by Abstraction](https://tallbeard.itch.io/music-loop-bundle)
+3. [Retro Sounds SFX Pack created by Dagurasu Sketch](https://dagsk.itch.io/retrosounds)
